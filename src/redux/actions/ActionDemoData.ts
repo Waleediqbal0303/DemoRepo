@@ -7,7 +7,6 @@ import moment from 'moment';
 
 const getDemoData = (page:any) => async (dispatch:any) => {
     try {
-        // console.log(page)
          dispatch({ type: page==1?SETDATALOADER:SETDATALOADERBOTTOM,payload: true});
         // let url = Config?.DummyMainUrl+Config?.DummySubUrl;
         // WebApis.getApiCall(url).then((response:any)=>{ // can make api call here to get data
@@ -17,12 +16,13 @@ const getDemoData = (page:any) => async (dispatch:any) => {
         // .catch((e:any)=>{
         //     dispatch({ type: SHOWDEMOERROR, payload: e.toString()});
         // })
+
+        //you can get data from api or currently without api max can do this to show all working
         let data: any[] = [];
         for(let i= page==1?page:((page-1)*10)+1; i<=(page==1?10:(page*10)); i++){
             data.push({id:i, toDo:i.toString(), status:i%2==0?'Done':'Working', dateTime:(moment(new Date()).format('YYYY-MM-DD HH:mm:ss')).toString()});
         }
-        // console.log("data", data);
-        
+        // setTimeout is for delay just for showing loader otherwise you wont be able to see bottom loader 
         setTimeout(() => {
             dispatch({ type: SETDATA, payload: {list:data, currentPage:page}});
         }, 1000);
